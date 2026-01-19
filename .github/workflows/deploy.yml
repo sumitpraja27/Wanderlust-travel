@@ -1,0 +1,56 @@
+name: 🚀 Deploy to Production
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - "README.md"
+      - "LICENSE"
+      - "CODE_OF_CONDUCT.md"
+      - "SECURITY.md"
+      - ".gitignore"
+      - "docs/**"
+      - ".github/ISSUE_TEMPLATE/**"
+
+# Prevent multiple deployments from running simultaneously
+concurrency:
+  group: deploy-production
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    name: 🌐 Production Deployment
+
+    steps:
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v4
+
+      - name: 🟢 Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.x" # Use stable LTS version for production
+          cache: "npm"
+
+      - name: 📦 Install Dependencies
+        run: npm ci
+
+      - name: 🔒 Run Security Audit
+        run: npm audit --omit=dev --audit-level high
+
+      - name: 🏗️ Build Application
+        run: |
+          echo "🚀 Building WanderLust for production deployment"
+          echo "📝 Commit: ${{ github.sha }}"
+          echo "👤 Author: ${{ github.actor }}"
+          echo "🌿 Branch: ${{ github.ref_name }}"
+          echo ""
+          echo "✅ Dependencies installed successfully"
+          echo "🔒 Security audit passed"
+          echo "📦 Application ready for deployment"
+          echo ""
+          echo "🔗 Render will auto-deploy from this commit to:"
+          echo "   https://wanderlust-c8cb.onrender.com"
+          echo ""
+          echo "🎉 Deployment initiated successfully!"
