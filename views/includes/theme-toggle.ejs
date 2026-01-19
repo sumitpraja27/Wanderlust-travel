@@ -1,0 +1,122 @@
+<!-- Premium Glassmorphism Theme Toggle -->
+<div class="theme-toggle-glass-container">
+  <button type="button" id="theme-toggle-btn" class="theme-toggle-glass-btn" aria-label="Toggle dark mode" role="switch"
+    aria-checked="false">
+    <!-- Animated Background Glow -->
+    <span class="theme-toggle-glow"></span>
+
+    <!-- Icon Container -->
+    <span class="theme-toggle-icon-wrapper">
+      <!-- Sun Icon (Light Mode) -->
+      <i class="fa-solid fa-sun theme-icon theme-icon-light" id="theme-icon-light" aria-hidden="true"></i>
+      <!-- Moon Icon (Dark Mode) - Hidden by default -->
+      <i class="fa-solid fa-moon theme-icon theme-icon-dark" id="theme-icon-dark" aria-hidden="true"></i>
+    </span>
+  </button>
+</div>
+
+<script>
+  // Lightweight Theme Manager with Tailwind
+  (function () {
+    'use strict';
+
+    const STORAGE_KEY = 'wanderlust-theme-preference';
+    const btn = document.getElementById('theme-toggle-btn');
+    const iconLight = document.getElementById('theme-icon-light');
+    const iconDark = document.getElementById('theme-icon-dark');
+
+    // Initialize theme
+    function getInitialTheme() {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      if (stored) return stored;
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+
+    let currentTheme = getInitialTheme();
+
+    function applyTheme(theme) {
+      if (theme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        document.body.classList.add('dark-mode');
+        iconLight.classList.add('theme-icon-hidden');
+        iconDark.classList.remove('theme-icon-hidden');
+        btn.setAttribute('aria-checked', 'true');
+        btn.setAttribute('aria-label', 'Switch to light mode');
+      } else {
+        document.documentElement.removeAttribute('data-theme');
+        document.body.classList.remove('dark-mode');
+        iconLight.classList.remove('theme-icon-hidden');
+        iconDark.classList.add('theme-icon-hidden');
+        btn.setAttribute('aria-checked', 'false');
+        btn.setAttribute('aria-label', 'Switch to dark mode');
+      }
+
+      // Update meta theme-color
+      let metaTheme = document.querySelector('meta[name="theme-color"]');
+      if (!metaTheme) {
+        metaTheme = document.createElement('meta');
+        metaTheme.name = 'theme-color';
+        document.head.appendChild(metaTheme);
+      }
+      metaTheme.content = theme === 'dark' ? '#1f2937' : '#ffffff';
+
+      // Dispatch event for other components
+      window.dispatchEvent(new CustomEvent('themeChanged', { detail: { theme } }));
+    }
+
+    function toggleTheme() {
+      currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+      localStorage.setItem(STORAGE_KEY, currentTheme);
+      applyTheme(currentTheme);
+    }
+
+    // Apply initial theme
+    applyTheme(currentTheme);
+
+    // Event listeners
+    if (btn) {
+      btn.addEventListener('click', toggleTheme);
+    }
+
+    // Keyboard shortcut (Ctrl + Shift + T)
+    document.addEventListener('keydown', (e) => {
+      if (e.ctrlKey && e.shiftKey && e.key === 'T') {
+        e.preventDefault();
+        toggleTheme();
+      }
+    });
+
+    // System preference change detection
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+      if (!localStorage.getItem(STORAGE_KEY)) {
+        currentTheme = e.matches ? 'dark' : 'light';
+        applyTheme(currentTheme);
+      }
+    });
+
+    // Cross-tab sync
+    window.addEventListener('storage', (e) => {
+      if (e.key === STORAGE_KEY && e.newValue) {
+        currentTheme = e.newValue;
+        applyTheme(currentTheme);
+      }
+    });
+
+    // Expose globally for debugging
+    window.themeManager = {
+      getTheme: () => currentTheme,
+      setTheme: (theme) => {
+        if (['light', 'dark'].includes(theme)) {
+          currentTheme = theme;
+          localStorage.setItem(STORAGE_KEY, theme);
+          applyTheme(theme);
+        }
+      },
+      resetToSystem: () => {
+        localStorage.removeItem(STORAGE_KEY);
+        currentTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        applyTheme(currentTheme);
+      }
+    };
+  })();
+</script>
