@@ -477,41 +477,6 @@ For detailed documentation, see [Admin Dashboard Guide](docs/ADMIN_DASHBOARD.md)
 
 Please refer to the [Code of Conduct](https://github.com/koushik369mondal/WanderLust/blob/main/CODE_OF_CONDUCT.md) for details on contributing guidelines and community standards.
 
-## 🤝 Contributors
-
-[![Contributors](https://img.shields.io/github/contributors/koushik369mondal/WanderLust?style=for-the-badge)](https://github.com/koushik369mondal/WanderLust/graphs/contributors)
-
-<p align="left">
-  <a href="https://github.com/koushik369mondal/WanderLust/graphs/contributors">
-    <img src="https://contrib.rocks/image?repo=koushik369mondal/WanderLust" alt="Contributors" />
-  </a>
-</p>
-
-## 🧑‍💻 Project Admin
-
-<table>
-<tr>
-<td align="center">
-<a href="https://github.com/koushik369mondal"><img src="https://avatars.githubusercontent.com/u/137462541?v=4" height="140px" width="140px" alt="Kaushik Mandal"></a><br><sub><b>Kaushik Mandal</b><br><a href="https://www.linkedin.com/in/koushik369mondal/"><img src="https://github-production-user-asset-6210df.s3.amazonaws.com/73993775/278833250-adb040ea-e3ef-446e-bcd4-3e8d7d4c0176.png" width="45px" height="45px"></a></sub>
-</td>
-</tr>
-</table>
-
-## ⭐ Stargazers
-
-<div align="center">
-  <a href="https://github.com/koushik369mondal/WanderLust/stargazers">
-    <img src="https://reporoster.com/stars/koushik369mondal/WanderLust?type=svg&limit=100&names=false" alt="Stargazers" />
-  </a>
-</div>
-
-## 🍴 Forkers
-
-<div align="center">
-  <a href="https://github.com/koushik369mondal/WanderLust/network/members">
-    <img src="https://reporoster.com/forks/koushik369mondal/WanderLust?type=svg&limit=100&names=false" alt="Forkers" />
-  </a>
-</div>
 
 ## 💡 Support & Feedback
 
